@@ -16,7 +16,8 @@
     <div id="app">
       <div class="container">
         <div class="text-end mt-4">
-          <button class="btn btn-primary">
+                                               <!--參數new帶入openModal函式 -->
+          <button class="btn btn-primary" @click="openModal('new')">
             建立新的產品
           </button>
         </div>
@@ -48,15 +49,15 @@
               <td>{{item.origin_price}}</td>
               <td>{{ item.price}}</td>
               <td>
-                <span class="text-success">啟用</span>
-                <span>未啟用</span>
+                <span class="text-success" v-if="item.is_enabled">啟用</span>
+                <span v-else>未啟用</span>
               </td>
               <td>
                 <div class="btn-group">
-                  <button type="button" class="btn btn-outline-primary btn-sm">
+                  <button type="button" class="btn btn-outline-primary btn-sm" @click="openModal('edit', item)">
                     編輯
                   </button>
-                  <button type="button" class="btn btn-outline-danger btn-sm">
+                  <button type="button" class="btn btn-outline-danger btn-sm" @click="openModal('delete', item)">
                     刪除
                   </button>
                 </div>
@@ -66,13 +67,16 @@
         </table>
       </div>
       <!-- Modal -->
-      <!-- <div id="productModal" ref="productModal" class="modal fade" tabindex="-1" aria-labelledby="productModalLabel"
+      <!--編輯/新增產品modal程式碼開始-->
+       <div id="productModal" ref="productModal" class="modal fade" tabindex="-1" aria-labelledby="productModalLabel"
            aria-hidden="true">
         <div class="modal-dialog modal-xl">
           <div class="modal-content border-0">
             <div class="modal-header bg-dark text-white">
               <h5 id="productModalLabel" class="modal-title">
-                <span>新增產品</span>
+                <!-- 判斷是顯示新增/編輯產品標題 預設為false -->
+                <span v-if="AddNewProduct">新增產品</span>
+                <span v-else>編輯產品</span>
               </h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -103,7 +107,6 @@
                     <label for="title" class="form-label">標題</label>
                     <input id="title" type="text" class="form-control" placeholder="請輸入標題">
                   </div>
-
                   <div class="row">
                     <div class="mb-3 col-md-6">
                       <label for="category" class="form-label">分類</label>
@@ -162,6 +165,9 @@
           </div>
         </div>
       </div>
+      <!--編輯/新增產品modal程式碼結束-->
+
+      <!-- 刪除產品modaL程式碼開始 -->
       <div id="delProductModal" ref="delProductModal" class="modal fade" tabindex="-1"
            aria-labelledby="delProductModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -186,7 +192,8 @@
             </div>
           </div>
         </div>
-      </div> -->
+      </div> 
+       <!-- 刪除產品modaL程式碼結束 -->
       <!-- Modal -->
     </div>
 

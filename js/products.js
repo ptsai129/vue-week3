@@ -28,6 +28,7 @@ Vue.createApp({
           window.location = 'index.html';
         })
         },
+
         //取得產品列表
         getProductList(){
             axios.get(`${this.apiUrl}/api/${this.apiPath}/admin/products/all`)
@@ -41,6 +42,7 @@ Vue.createApp({
         //依據帶入的參數判別出modal顯示的內容 
         openModal( editState , item){
             if (editState === 'new'){
+                //確保每次打開欄位都是空的
                  this.temp = {
                      imagesUrl :[],
                  };
@@ -60,8 +62,41 @@ Vue.createApp({
                 //顯示modal
                 delProductModal.show()
             }
-            
-        }
+        },
+        //更新產品資訊(新增跟編輯共用相同modal)
+        updateProducts(){
+          let updateUrl = `${this.apiUrl}/api/${this.apiPath}/admin/product`;
+          let requestMethod = 'post';
+          //如果是編輯商品資料 api網址和請求方法會更改
+          if( this.AddNewProduct === false){
+              updateUrl = `${this.apiUrl}/api/${this.apiPath}/admin/product/${this.temp.id}`;
+              requestMethod = 'put';
+          }
+          axios[requestMethod](updateUrl , {data: this.temp})
+          .then((res)=>{
+              //顯示已建立產品
+              alert(res.data.message);
+              //關閉modal
+              productModal.hide();
+          })
+          .catch((err)=>{
+              alert(err.data.message);
+        })
+    },
+
+    //刪除商品
+    deleteProduct(){
+        axios.delete(`${this.apiUrl}/api/${this.apiPath}/admin/product/${this.temp.id}`)
+        .then((res)=>{
+            alert(res.data.message);
+            delProductModal.hide();
+            this.getProductList();
+        }).catch((err)=>{
+            alert(err.data.message);
+        })
+
+    }
+
 
     }, 
     mounted(){

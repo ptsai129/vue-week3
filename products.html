@@ -41,12 +41,12 @@
               </th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td></td>
-              <td></td>
-              <td class="text-end"></td>
-              <td class="text-end"></td>
+          <tbody >
+            <tr v-for=" item in products" :key="item.id">
+              <td>{{ item.category}}</td>
+              <td>{{ item.title}}</td>
+              <td>{{item.origin_price}}</td>
+              <td>{{ item.price}}</td>
               <td>
                 <span class="text-success">啟用</span>
                 <span>未啟用</span>
@@ -66,7 +66,7 @@
         </table>
       </div>
       <!-- Modal -->
-      <div id="productModal" ref="productModal" class="modal fade" tabindex="-1" aria-labelledby="productModalLabel"
+      <!-- <div id="productModal" ref="productModal" class="modal fade" tabindex="-1" aria-labelledby="productModalLabel"
            aria-hidden="true">
         <div class="modal-dialog modal-xl">
           <div class="modal-content border-0">
@@ -186,7 +186,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
       <!-- Modal -->
     </div>
 
